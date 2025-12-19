@@ -2,13 +2,11 @@ const { User } = require('../models/users.model.js')
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcryptjs")
 
-// const SECRET_KEY = 'juda_vapshe_hechkimbilmas_otaham_maxfiy_kalit'
-
 const REGISTER = async(req, res) => {
 
 	const  {name , gmail, age ,phone ,password} = req.body
 	if(!(name && gmail && age && phone && password)) return res.json({
-		message: "Hoz qanday qoshishim kerak Malu'mot bo'masa"
+		message: "Malumot kiritish shart"
 	})
 
 	const newUser = await User.create({
