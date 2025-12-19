@@ -2,7 +2,42 @@ const { User } = require('../models/users.model.js')
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcryptjs")
 
-const SECRET_KEY = 'juda_vapshe_hechkimbilmas_otaham_maxfiy_kalit'
+// const SECRET_KEY = 'juda_vapshe_hechkimbilmas_otaham_maxfiy_kalit'
+
+const REGISTER = async(req, res) => {
+
+	const  {name , gmail, age ,phone ,password} = req.body
+	if(!(name && gmail && age && phone && password)) return res.json({
+		message: "Hoz qanday qoshishim kerak Malu'mot bo'masa"
+	})
+	else if(!name) return res.json({
+		message: "Name kiritish shart"
+	})
+	else if(!gmail) return res.json({
+		message: "Name kiritish shart"
+	})
+	else if(!age) return res.json({
+		message: "Name kiritish shart"
+	})
+	else if(!phone) return res.json({
+		message: "Name kiritish shart"
+	})
+	else if(!password) return res.json({
+		message: "Name kiritish shart"
+	})
+
+	const newUser = await User.create({
+		name,
+		gmail,
+		age,
+		phone,
+		password: await bcrypt.hash(password, 12)
+	})
+	res.json({
+		message: "Successfully registered",
+		newUser
+	})
+}
 
 const LOGIN = async (req, res) => {
 	const { phone, password } = req.body
@@ -28,5 +63,6 @@ const LOGIN = async (req, res) => {
 }
 
 module.exports = {
-	LOGIN
+	LOGIN,
+	REGISTER
 }
