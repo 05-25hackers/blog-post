@@ -7,23 +7,8 @@ const bcrypt = require("bcryptjs")
 const REGISTER = async(req, res) => {
 
 	const  {name , gmail, age ,phone ,password} = req.body
-	if(!(name && gmail && age && phone && password)) return res.json({
+	if(!(name || gmail || age || phone || password)) return res.json({
 		message: "Hoz qanday qoshishim kerak Malu'mot bo'masa"
-	})
-	else if(!name) return res.json({
-		message: "Name kiritish shart"
-	})
-	else if(!gmail) return res.json({
-		message: "Name kiritish shart"
-	})
-	else if(!age) return res.json({
-		message: "Name kiritish shart"
-	})
-	else if(!phone) return res.json({
-		message: "Name kiritish shart"
-	})
-	else if(!password) return res.json({
-		message: "Name kiritish shart"
 	})
 
 	const newUser = await User.create({
