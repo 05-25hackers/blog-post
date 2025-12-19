@@ -10,3 +10,7 @@ async function database(){
         console.log("DB error")
     }
 }
+
+module.exports = {
+    database
+}
