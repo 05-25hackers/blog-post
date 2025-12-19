@@ -1,14 +1,14 @@
 const { User } = require('../models/users.model.js')
 const jwt = require('jsonwebtoken')
 const bcrypt = require("bcryptjs")
+require("dotenv").config()
 
-// const SECRET_KEY = 'juda_vapshe_hechkimbilmas_otaham_maxfiy_kalit'
-
+const SECRET_KEY = process.env.SECRET_KEY
 const REGISTER = async(req, res) => {
 
 	const  {name , gmail, age ,phone ,password} = req.body
 	if(!(name && gmail && age && phone && password)) return res.json({
-		message: "Hoz qanday qoshishim kerak Malu'mot bo'masa"
+		message: "name, gmail, age, phone, password is required"
 	})
 
 	const newUser = await User.create({
