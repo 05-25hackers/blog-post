@@ -15,7 +15,6 @@ const CREATE_POST = async (req, res) => {
     data: newData,
   });
 };
-const UPDATE_POST = (req, res) => {};
 const DELETE_POST = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -29,7 +28,18 @@ const DELETE_POST = async (req, res) => {
   }
 };
 
-
+const UPDATE_POST = async(req, res) => {
+    const {title, body} = req.body
+    const _id = req.params.id
+    const updatedUser = await Post.findByIdAndUpdate({_id}, {title, body})
+    if(!updatedUser) res.json({
+        message: "User not found"
+    })
+    res.json({
+        message: "Successfully updated",
+        data: updatedUser
+    })
+}
 module.exports = {
   DELETE_POST,
   CREATE_POST,

@@ -9,4 +9,6 @@ const route = express.Router();
 
 route.post("/post", checkToken, CREATE_POST);
 route.delete("/post/:id", checkToken, DELETE_POST);
-module.exports = route;
+route.put('/post/:id', checkToken, UPDATE_POST)
+
+module.exports = route
