@@ -4,6 +4,7 @@ const path = require("path")
 const authRoute = require('./routes/auth.routes.js')
 const postRoute = require('./routes/posts.routes.js')
 const commentRoute = require('./routes/comments.routes.js')
+const userRoute = require('./routes/users.routes.js')
 
 const app = express()
 app.use(express.urlencoded({ extended: true }))
@@ -16,6 +17,7 @@ async function start() {
 	app.use('/auth', authRoute)
 	app.use(postRoute)
 	app.use(commentRoute)
+	app.use(userRoute)
 
 	app.listen(3000, () => console.log('http://localhost:3000'))
 }
