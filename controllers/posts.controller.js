@@ -3,11 +3,16 @@ const { User } = require("../models/users.model.js");
 const { Comment } = require("../models/comments.model.js");
 
 const CREATE_POST = async (req, res) => {
-  const { title, body } = req.body;
+  let reqBody = req.body.body
+  reqBody = JSON.parse(reqBody)
+
+
+  const { title, body } = reqBody;
   const userId = req.user._id;
   const newData = await Post.create({
     title,
     body,
+    img_name: req.imgName,
     user: userId,
   });
   await User.findByIdAndUpdate({ _id: userId }, { $push: { posts: newData } });
