@@ -1,13 +1,12 @@
 const { Post } = require("../models/posts.model.js");
 const { User } = require("../models/users.model.js");
-const { Comment } = require("../models/comments.model.js");
 
 const CREATE_POST = async (req, res) => {
-  let reqBody = req.body.body
-  reqBody = JSON.parse(reqBody)
-
+  let reqBody = req.body.body;
+  reqBody = JSON.parse(reqBody);
 
   const { title, body } = reqBody;
+
   const userId = req.user._id;
   const newData = await Post.create({
     title,
@@ -21,8 +20,15 @@ const CREATE_POST = async (req, res) => {
     data: newData,
   });
 };
+
 const GET_POSTS = async (req, res) => {
-  const data = await Post.find();
+  const data = await Post.find()
+    .populate("user", "name")
+    .populate({
+      path: "comment",
+      populate: { path: "user", select: "name" },
+    });
+
   res.json({
     message: "Success",
     data: data,
@@ -36,47 +42,21 @@ const DELETE_POST = async (req, res) => {
     message: "Ochirildi",
   });
 };
+
 const UPDATE_POST = async (req, res) => {
   const { id } = req.params;
   const { title, body } = req.body;
   const data = await Post.findByIdAndUpdate(id, { title, body }, { new: true });
+
   res.json({
     message: "Yangilandi",
     data: data,
   });
 };
-const CREATE_COMMENT = async (req, res) => {
-  const { id } = req.params;
-  const { text } = req.body;
-  const userId = req.user._id;
-  const newComment = await Comment.create({
-    text,
-    user: userId,
-    post: id,
-  });
-  await Post.findByIdAndUpdate(id, { $push: { comment: newComment._id } });
-  await User.findByIdAndUpdate(userId, { $push: { comment: newComment._id } });
-  res.json({
-    message: "Izoh qoshildi",
-    data: newComment,
-  });
-};
-const DELETE_COMMENT = async (req, res) => {
-  const { id } = req.params;
-  const comment = await Comment.findByIdAndDelete(id);
-  if (comment) {
-    await Post.findByIdAndUpdate(comment.post, { $pull: { comment: id } });
-    await User.findByIdAndUpdate(comment.user, { $pull: { comment: id } });
-  }
-  res.json({
-    message: "Izoh o'chirildi",
-  });
-};
+
 module.exports = {
   CREATE_POST,
   GET_POSTS,
   DELETE_POST,
   UPDATE_POST,
-  CREATE_COMMENT,
-  DELETE_COMMENT,
 };

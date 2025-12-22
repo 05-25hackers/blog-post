@@ -1,9 +1,20 @@
-const express = require('express')
-const {DELETE_POST, UPDATE_POST} = require('../controllers/comments.controller.js')
+const express = require("express");
 
-const route = express.Router()
+const {
+  CREATE_COMMENT,
+  GET_COMMENTS,
+  DELETE_COMMENT,
+  UPDATE_COMMENT,
+} = require("../controllers/comments.controller.js");
+const { checkToken } = require("../middlewares/auth.middleware.js");
 
-route.put('/comments/:id', UPDATE_POST)
-route.delete('/comments/:id', DELETE_POST)
+const route = express.Router();
 
-module.exports = route
+route.get("/comments", GET_COMMENTS);
+
+route.post("/post/:id/comment", checkToken, CREATE_COMMENT);
+route.put("/comment/:id", checkToken, UPDATE_COMMENT);
+
+route.delete("/comment/:id", checkToken, DELETE_COMMENT);
+
+module.exports = route;
