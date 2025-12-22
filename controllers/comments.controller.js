@@ -1,5 +1,7 @@
 const { Comment } = require("../models/comments.model.js");
+
 const { Post } = require("../models/posts.model.js");
+
 const { User } = require("../models/users.model.js");
 
 const CREATE_COMMENT = async (req, res) => {
@@ -33,7 +35,8 @@ const DELETE_COMMENT = async (req, res) => {
   const { id } = req.params;
   const comment = await Comment.findByIdAndDelete(id);
   if (comment) {
-    await Post.findByIdAndUpdate(comment.post, { $pull: { comment: id } });
+      await Post.findByIdAndUpdate(comment.post, { $pull: { comment: id } });
+      
     await User.findByIdAndUpdate(comment.user, { $pull: { comment: id } });
   }
 
@@ -58,3 +61,5 @@ module.exports = {
   DELETE_COMMENT,
   UPDATE_COMMENT,
 };
+
+
