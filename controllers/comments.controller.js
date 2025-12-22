@@ -56,10 +56,8 @@ const UPDATE_COMMENT = async (req, res) => {
   });
 };
 module.exports = {
-  CREATE_COMMENT,
-  GET_COMMENTS,
-  DELETE_COMMENT,
-  UPDATE_COMMENT,
-};
-
-
+    CREATE_COMMENT,
+    DELETE_COMMENT,
+    DELETE_POST,
+    UPDATE_POST,
+}

@@ -59,4 +59,5 @@ module.exports = {
   GET_POSTS,
   DELETE_POST,
   UPDATE_POST,
-};
+}
+
