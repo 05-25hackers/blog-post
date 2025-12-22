@@ -1,9 +1,9 @@
 const express = require('express')
-const {DELETE_POST, UPDATE_POST} = require('../controllers/comments.controller.js')
+const {CREATE_COMMENT, DELETE_COMMENT} = require('../controllers/comments.controller.js')
 
 const route = express.Router()
 
-route.put('/comments/:id', UPDATE_POST)
-route.delete('/comments/:id', DELETE_POST)
+route.post('/post/:id/comment', checkToken, CREATE_COMMENT)
+route.delete('/comment/:id', checkToken, DELETE_COMMENT)
 
 module.exports = route
