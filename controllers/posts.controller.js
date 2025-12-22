@@ -12,7 +12,7 @@ const CREATE_POST = async (req, res) => {
   const newData = await Post.create({
     title,
     body,
-    img_name: req.imgName,
+    img_name: "/uploads/" + req.imgName,
     user: userId,
   });
   await User.findByIdAndUpdate({ _id: userId }, { $push: { posts: newData } });
